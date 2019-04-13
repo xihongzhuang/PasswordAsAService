@@ -15,6 +15,7 @@ Install
 --------------
 
 ``` sh
+$ cd
 $ git clone git@github.com:xihongzhuang/PasswordAsAService.git
 $ cd PasswordAsAService
 $ npm install
@@ -22,10 +23,11 @@ $ npm install
 
 Compilation
 --------------
-/*to complile the typescript to javascript
+This project has already come with a compile version of Javascript code locating at dist/
+in case modification need to be made on source typescript code, to complile the typescript to javascript
 make sure gulp is installed in the system, if not run : sudo npm install -g gulp
-compile javascript file *.js locate in sub-folder dist
-*/
+compile javascript file *.js locate in sub-folder dist/
+
 ``` sh
 $ gulp
 ```
@@ -51,12 +53,11 @@ which indicate the path of passwd file and group file
 
 USAGE example:
 --------------
-/*
 login process, pass in basic encoding for admin:admin123
 TODO: 
-    upon login success, a temporary sessionId will be return to be used in the following commands, sessionId expire in 24 hours by default
+    upon login success, a temporary sessionId will be returned to be used in the following commands, sessionId expire in 24 hours by default.
     the following command will check if a valid sessionId is presented in the header to bypass the normal authentication process
-*/
+
 ``` sh
 $ curl -H "Authorization: Basic YWRtaW46YWRtaW4xMjM=" --request POST http://localhost:8080/users/login
 // "query all users ..."
