@@ -1,0 +1,26 @@
+{
+  "name": "PasswdAsAService",
+  "version": "1.0.3",
+  "description": "a coding challenge",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js"
+  },
+  "author": "surjohn",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "~4.11.1",
+    "@types/socket.io": "~1.4.33",
+    "body-parser": "~1.18.2",
+    "cors": "~2.8.4",
+    "dotenv": "~5.0.1",
+    "express": "~4.16.3",
+    "fs": "0.0.1-security",
+    "uuid": "~3.2.1"
+  },
+  "devDependencies": {
+    "gulp": "~3.9.1",
+    "gulp-typescript": "~4.0.2",
+    "typescript": "~2.8.3"
+  }
+}

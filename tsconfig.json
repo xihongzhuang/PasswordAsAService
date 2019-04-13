@@ -1,0 +1,13 @@
+{
+    "files": [
+        "src/*.ts",
+        "src/model/*.ts",
+        "src/db/*.ts"
+    ],
+    "compileOnSave": true,
+    "compilerOptions": {
+        "module": "commonjs",        
+        "types": ["node"],
+        "target": "es2015"
+    }
+}
