@@ -6,7 +6,7 @@ Prerequisite:
     install latest node.js before proceed
     this project was tested orginally on Ubuntu 18.04, but should work on other platform with minor changes.
 
-For testing purpose, here we use curl with basic Authentication hardcode with username : admin, password: admin123
+For testing purpose, here we use curl with basic Authentication hardcoded with username : admin, password: admin123
 HTTP header :
 Authorization: Basic YWRtaW46YWRtaW4xMjM=
 in production code, we should link this authentication process to a real backend user database or LDAP
@@ -70,7 +70,7 @@ UNIT test:
 ``` sh
 ##unit test script all valid APIs implmented in this service:
 ##if username is not present, default username is root 
-$ ./unit_test.sh username
+$ ./unit_test.sh [username]
 ```
 
 
