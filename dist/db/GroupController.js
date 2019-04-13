@@ -37,12 +37,19 @@ class GroupController extends basicController_1.BasicController {
     setupRouter() {
         this._router.get('/', (req, res) => {
             //req.url is the command line
-            this.getGroup(this.groupfile, (grps) => {
-                if (grps.length == 0) {
-                    res.status(404).send({ "error": "no group found, invalid configuration file !" });
+            this.checkAuthentication(req.headers.authorization, (errCode, resp) => {
+                if (resp.loginSucceed && errCode == 200) {
+                    this.getGroup(this.groupfile, (grps) => {
+                        if (grps.length == 0) {
+                            res.status(404).send({ "error": "no group found, invalid configuration file !" });
+                        }
+                        else {
+                            res.status(200).send(grps);
+                        }
+                    });
                 }
                 else {
-                    res.status(200).send(grps);
+                    res.status(errCode).send(resp.reason);
                 }
             });
         });
@@ -50,33 +57,46 @@ class GroupController extends basicController_1.BasicController {
             console.log('query url: ', req.url);
             let Cnds = this.parseUrl(req.url);
             console.log("cnds :", Cnds);
-            //req.url is the command line
-            this.getGroup(this.groupfile, (grps) => {
-                let qRes = [];
-                grps.forEach((grp) => {
-                    if (this.isMatchAllCnd(grp, Cnds)) {
-                        console.log("match : ", grp);
-                        qRes.push(grp);
-                    }
-                });
-                if (qRes.length == 0) {
-                    res.status(404).send({ "error": "specified group not found !" });
+            this.checkAuthentication(req.headers.authorization, (errCode, resp) => {
+                if (resp.loginSucceed && errCode == 200) {
+                    this.getGroup(this.groupfile, (grps) => {
+                        let qRes = [];
+                        grps.forEach((grp) => {
+                            if (this.isMatchAllCnd(grp, Cnds)) {
+                                console.log("match : ", grp);
+                                qRes.push(grp);
+                            }
+                        });
+                        if (qRes.length == 0) {
+                            res.status(404).send({ "error": "specified group not found !" });
+                        }
+                        else {
+                            res.status(200).send(qRes);
+                        }
+                    });
                 }
                 else {
-                    res.status(200).send(qRes);
+                    res.status(errCode).send(resp.reason);
                 }
             });
         });
         this._router.get('/:id', (req, res) => {
-            this.getGroup(this.groupfile, (grps) => {
-                let grp = grps.find((item) => {
-                    return item.gid == req.params.id;
-                });
-                if (grp) {
-                    res.status(200).send(grp);
+            this.checkAuthentication(req.headers.authorization, (errCode, resp) => {
+                if (resp.loginSucceed && errCode == 200) {
+                    this.getGroup(this.groupfile, (grps) => {
+                        let grp = grps.find((item) => {
+                            return item.gid == req.params.id;
+                        });
+                        if (grp) {
+                            res.status(200).send(grp);
+                        }
+                        else {
+                            res.status(404).send({ "error": `group ${req.params.id} not found !` });
+                        }
+                    });
                 }
                 else {
-                    res.status(404).send({ "error": `group ${req.params.id} not found !` });
+                    res.status(errCode).send(resp.reason);
                 }
             });
         });

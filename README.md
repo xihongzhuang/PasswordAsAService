@@ -68,8 +68,9 @@ $ curl -H "$HEAD" http://localhost:8080/groups
 UNIT test:
 --------------
 ``` sh
-##unit test script all valid APIs implmented in this service:
-$ ./unit_test.sh
+//unit test script all valid APIs implmented in this service:
+//if username is not present, default username is root 
+$ ./unit_test.sh username
 ```
 
 
