@@ -23,10 +23,10 @@ $ npm install
 
 Compilation
 --------------
-This project has already come with a compile version of Javascript code locating at dist/
-in case modification need to be made on source typescript code, to complile the typescript to javascript
-make sure gulp is installed in the system, if not run : sudo npm install -g gulp
-compile javascript file *.js locate in sub-folder dist/
+This project has already come with a compiled version of Javascript code locating at subfolder dist/
+In case modification need to be made on source typescript code, to complile the modified typescript to javascript
+make sure gulp is installed in the system, if has not been installed, run : sudo npm install -g gulp
+Compiled javascript file *.js locate in sub-folder dist/
 
 ``` sh
 $ gulp
@@ -41,15 +41,14 @@ $ npm start
 
 Configuration file
 --------------
-/*
 default configuration file is /etc/ms_retrieve_userinfo.cfg or user provided configuration file,
-the configuration file passed in should have the following structure
+the configuration file passed in should have the following json structure
 {
 "pwd_file": "/etc/passwd",
 "group_file": "/etc/group"
 }
 which indicate the path of passwd file and group file
-*/
+
 
 USAGE example:
 --------------
