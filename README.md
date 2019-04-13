@@ -59,17 +59,17 @@ TODO:
 
 ``` sh
 $ curl -H "Authorization: Basic YWRtaW46YWRtaW4xMjM=" --request POST http://localhost:8080/users/login
-// "query all users ..."
+## "query all users ..."
 $ curl -H "$HEAD" http://localhost:8080/users
-// "query all groups ..."
+## "query all groups ..."
 $ curl -H "$HEAD" http://localhost:8080/groups
 ```
 
 UNIT test:
 --------------
 ``` sh
-//unit test script all valid APIs implmented in this service:
-//if username is not present, default username is root 
+##unit test script all valid APIs implmented in this service:
+##if username is not present, default username is root 
 $ ./unit_test.sh username
 ```
 
