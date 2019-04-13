@@ -4,7 +4,7 @@ a UNIX-like system that is usually locked away in the UNIX /etc/passwd and /etc/
 Prerequisite:
     this project is based on node.js (written in javascript)
     install latest node.js before proceed
-    this project was tested orginally on Ubuntu 18.04, but should work on other platform with minor change
+    this project was tested orginally on Ubuntu 18.04, but should work on other platform with minor changes.
 
 For testing purpose, here we use curl with basic Authentication hardcode with username : admin, password: admin123
 HTTP header :
@@ -32,7 +32,7 @@ $ gulp
 
 Start
 --------------
-//to start the backend MicroService:
+start the backend MicroService and listening on port 8080:
 ``` sh
 $ npm start
 ```
@@ -60,7 +60,9 @@ TODO:
 ``` sh
 $ curl -H "Authorization: Basic YWRtaW46YWRtaW4xMjM=" --request POST http://localhost:8080/users/login
 // "query all users ..."
-curl -H "$HEAD" http://localhost:8080/users
+$ curl -H "$HEAD" http://localhost:8080/users
+// "query all groups ..."
+$ curl -H "$HEAD" http://localhost:8080/groups
 ```
 
 UNIT test:

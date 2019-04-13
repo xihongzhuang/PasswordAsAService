@@ -1,6 +1,7 @@
 // import * as express from 'express';
 import { BasicController } from './basicController';
 import { IGroup } from '../model/IUser';
+import { LoginResponse } from '../model/userLoginResponse';
 
 // const uuid = require('uuid/v4');
 
@@ -41,50 +42,73 @@ export class GroupController extends BasicController {
     private setupRouter(): void {
         this._router.get('/', (req, res) => {
             //req.url is the command line
-            this.getGroup(this.groupfile, (grps: IGroup[]) => {
-                if (grps.length == 0) {
-                    res.status(404).send({"error": "no group found, invalid configuration file !"});
+
+            this.checkAuthentication(req.headers.authorization, (errCode: number, resp: LoginResponse) => {
+                if (resp.loginSucceed && errCode == 200) {
+                    this.getGroup(this.groupfile, (grps: IGroup[]) => {
+                        if (grps.length == 0) {
+                            res.status(404).send({"error": "no group found, invalid configuration file !"});
+                        }
+                        else {
+                            res.status(200).send(grps);
+                        }    
+                    });
+        
+                } else {
+                    res.status(errCode).send(resp.reason);
                 }
-                else {
-                    res.status(200).send(grps);
-                }    
             });
+
         });
 
         this._router.get('/query', (req, res) => {
             console.log('query url: ', req.url);
             let Cnds = this.parseUrl(req.url);
             console.log("cnds :", Cnds);
-            //req.url is the command line
-            this.getGroup(this.groupfile, (grps: IGroup[]) => {
-                let qRes : IGroup[] = [];
-                grps.forEach((grp: IGroup) => {
-                    if (this.isMatchAllCnd(grp, Cnds)) {
-                        console.log("match : ", grp);
-                        qRes.push(grp);
-                    }
-                });
-                if (qRes.length == 0) {
-                    res.status(404).send({"error": "specified group not found !"});
+            this.checkAuthentication(req.headers.authorization, (errCode: number, resp: LoginResponse) => {
+                if (resp.loginSucceed && errCode == 200) {
+                    this.getGroup(this.groupfile, (grps: IGroup[]) => {
+                        let qRes : IGroup[] = [];
+                        grps.forEach((grp: IGroup) => {
+                            if (this.isMatchAllCnd(grp, Cnds)) {
+                                console.log("match : ", grp);
+                                qRes.push(grp);
+                            }
+                        });
+                        if (qRes.length == 0) {
+                            res.status(404).send({"error": "specified group not found !"});
+                        }
+                        else {                    
+                            res.status(200).send(qRes);
+                        }    
+                    });
+                
+                } else {
+                    res.status(errCode).send(resp.reason);
                 }
-                else {                    
-                    res.status(200).send(qRes);
-                }    
             });
         });
 
         this._router.get('/:id', (req, res) => {
-            this.getGroup(this.groupfile, (grps: IGroup[]) => {
-                let grp = grps.find((item : IGroup) => {
-                    return item.gid == req.params.id;
-                });
-                if (grp) {
-                    res.status(200).send(grp);
+            this.checkAuthentication(req.headers.authorization, (errCode: number, resp: LoginResponse) => {
+                if (resp.loginSucceed && errCode == 200) {
+                    this.getGroup(this.groupfile, (grps: IGroup[]) => {
+                        let grp = grps.find((item : IGroup) => {
+                            return item.gid == req.params.id;
+                        });
+                        if (grp) {
+                            res.status(200).send(grp);
+                        }
+                        else {                    
+                            res.status(404).send({"error": `group ${req.params.id} not found !`});
+                        }    
+                    });
+                
+                } else {
+                    res.status(errCode).send(resp.reason);
                 }
-                else {                    
-                    res.status(404).send({"error": `group ${req.params.id} not found !`});
-                }    
             });
+
         });
 
     }
